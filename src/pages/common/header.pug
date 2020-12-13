@@ -1,59 +1,63 @@
 header.header
   .container
     .header__inner
-      nav.header__menu
-        ul.header__menu-list
-          li.header__menu-item
-            a.header__menu-link.header__menu-link--inactive.header__menu-link--color(href='#') Элемент 1
-          li.header__menu-item
-            a.header__menu-link.header__menu-link--color(href='#') Элемент 2
-            ul.header__menu-sub
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 2.1
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 2.2
-                ul.header__menu-sub-sublist
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.2.1
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.2.2
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.2.3
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 2.3
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 2.4
-                ul.header__menu-sub-sublist
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.1
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.2
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.3
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.4
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.5
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.6
-                  li.header__menu-sub-subitem
-                    a.header__menu-sub-sublink.header__menu-link--color(href="#") Элемент 2.4.7
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 2.5
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 2.6
-          li.header__menu-item
-            a.header__menu-link.header__menu-link--inactive.header__menu-link--color(href='#') Элемент 3
-          li.header__menu-item
-            a.header__menu-link.header__menu-link--color(href='#') Элемент 4
-            ul.header__menu-sub
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 4.1
-              li.header__menu-sub-item
-                a.header__menu-sub-link.header__menu-link--color(href="#") Элемент 4.2
-          li.header__menu-item
-            a.header__menu-link.header__menu-link--inactive.header__menu-link--color(href='#') Элемент 5
-          li.header__menu-item
-            a.header__menu-link.header__menu-link--inactive.header__menu-link--color(href='#') Элемент 6
-      button.header__burger
+      nav.menu
+        ul.menu__list
+          li.menu__item
+            a.menu__link.link(href="#") Элемент 1
+          li.menu__item
+            a.menu__link.link(href="#") Элемент 2
+            +icon("menu__arrow", "arrow")
+            ul.menu__sublist
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 2.1
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 2.2
+                +icon("menu__arrow", "arrow")
+                ul.menu__sub-sublist
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.2.1
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.2.2
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.2.3
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 2.3
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 2.4
+                +icon("menu__arrow", "arrow")
+                ul.menu__sub-sublist
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.1
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.2
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.3
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.4
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.5
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.6
+                  li.menu__sub-subitem
+                    a.menu__sub-sublink.link(href="#") Элемент 2.4.7
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 2.5
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 2.6
+          li.menu__item
+            a.menu__link.link(href="#") Элемент 3
+          li.menu__item
+            a.menu__link.link(href="#") Элемент 4
+            +icon("menu__arrow", "arrow")
+            ul.menu__sublist
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 4.1
+              li.menu__subitem
+                a.menu__sublink.link(href="#") Элемент 4.2
+          li.menu__item
+            a.menu__link.link(href="#") Элемент 5
+          li.menu__item
+            a.menu__link.link(href="#") Элемент 6
+      button.burger
         span

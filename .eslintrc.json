@@ -19,7 +19,8 @@
           "always"
         ],
         "quotes": [
-          "never"
+          "error",
+          "single"
         ]
       }
     }

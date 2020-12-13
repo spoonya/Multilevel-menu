@@ -1,9 +1,11 @@
 @import 'utils/vars';
 
-@import 'common/global';
-
 @import 'mixins/media';
 
+@import 'common/global';
+
 @import 'common/header';
+@import 'common/burger';
+@import 'common/menu';
 
 @import 'index/content';

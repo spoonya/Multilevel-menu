@@ -70,6 +70,10 @@ button {
 }
 
 html {
+  @include media-tablet-lg {
+    font-size: 55%;
+  }
+
   font-size: 62.5%;
 }
 
@@ -79,7 +83,7 @@ body {
 
   margin: 0;
 
-  color: var(--color-primary-dark);
+  color: $color-primary-dark;
 }
 
 .container {
