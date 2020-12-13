@@ -2,7 +2,15 @@ const dom = {
   burger: document.querySelector('.burger'),
   body: document.querySelector('body'),
   menu: document.querySelector('.menu'),
-  menuArrows: document.querySelectorAll('.menu__arrow'),
+  page: document.querySelector('.page'),
+  menuArrows: {
+    firstLvl: document.querySelectorAll('.menu__arrow'),
+    secondLvl: document.querySelectorAll('.menu__subarrow'),
+  },
+  menuLists: {
+    secondLvl: document.querySelectorAll('.menu__sublist'),
+    thirdLvl: document.querySelectorAll('.menu__sub-sublist'),
+  },
   menuItems: {
     firstLvl: document.querySelectorAll('.menu__item'),
     secondLvl: document.querySelectorAll('.menu__subitem'),
@@ -12,102 +20,105 @@ const dom = {
 const modificators = {
   burgerActive: 'burger--active',
   menuBurger: 'menu--burger',
-  arrowVisible: 'menu__arrow--visible',
-  arrowActive: 'menu__arrow--active'
+  arrowActive: 'icon--active',
+  blackout: 'page--blackout',
+  scrollHidden: 'scroll-hidden'
+};
+
+const extraClasses = {
+  opened: 'opened',
+  touch: 'touch',
+};
+
+const commonArguments = {
+  burger: dom.burger,
+  menu: dom.menu,
+  page: dom.page,
+  body: dom.body
 };
 
 const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };
 
-const toggleBurgerClasses = (burger, menu) => {
-  burger.addEventListener('click', () => {
-    burger.classList.toggle(modificators.burgerActive);
-    menu.classList.toggle(modificators.menuBurger);
+const toggleBurgerClasses = (args) => {
+  args.burger.addEventListener('click', () => {
+    args.burger.classList.toggle(modificators.burgerActive);
+    args.menu.classList.toggle(modificators.menuBurger);
+    args.page.classList.toggle(modificators.blackout);
+    args.body.classList.toggle(modificators.scrollHidden);
   });
 };
 
-const removeBurgerClasses = (burger, menu) => {
-  burger.classList.remove(modificators.burgerActive);
-  menu.classList.remove(modificators.menuBurger);
+const removeBurgerClasses = (args) => {
+  args.burger.classList.remove(modificators.burgerActive);
+  args.menu.classList.remove(modificators.menuBurger);
+  args.page.classList.remove(modificators.blackout);
+  args.body.classList.remove(modificators.scrollHidden);
 };
 
-const setMenuLinksDesktopBehaviour = (items) => {
-  items.forEach((el) => {
-    el.addEventListener('mouseout', () => {
-      el.classList.remove('hover');
+const setMenuArrowsBehaviour = (arrows, menuLists) => {
+  for (let i = 0; i < menuLists.length; i++) {
+    arrows[i].forEach((arrow) => {
+      arrow.addEventListener('click', () => {
+        const subMenu = arrow.nextElementSibling;
+        const currentArrow = arrow;
+
+        if (subMenu.classList.contains(extraClasses.opened)) {
+          subMenu.classList.remove(extraClasses.opened);
+          currentArrow.classList.remove(modificators.arrowActive);
+        } else {
+          menuLists[i].forEach((el) => el.classList.remove(extraClasses.opened));
+          arrows[i].forEach((el) => el.classList.remove(modificators.arrowActive));
+          currentArrow.classList.add(modificators.arrowActive);
+          subMenu.classList.add(extraClasses.opened);
+        }
+
+        subMenu.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
     });
-
-    el.addEventListener('mouseover', () => {
-      el.classList.add('hover');
-    });
-  });
-};
-
-const setMenuLinksMobileBehaviour = (items) => {
-  items.forEach((el) => {
-    el.removeEventListener('mouseout', () => {
-      el.classList.remove('hover');
-    });
-
-    el.removeEventListener('mouseover', () => {
-      el.classList.add('hover');
-    });
-  });
-};
-
-const setMenuArrowsMobileBehaviour = (arrows) => {
-  arrows.forEach((el) => {
-    el.classList.add(modificators.arrowVisible);
-
-    const subMenu = el.nextElementSibling;
-    const arrow = el;
-
-    el.addEventListener('click', () => {
-      subMenu.classList.toggle('open');
-      arrow.classList.toggle(modificators.arrowActive);
-    });
-  });
-};
-
-const setMenuArrowsDesktopBehaviour = (arrows) => {
-  arrows.forEach((el) => {
-    el.classList.remove(modificators.arrowVisible);
-
-    const subMenu = el.nextElementSibling;
-    const arrow = el;
-
-    el.removeEventListener('click', () => {
-      subMenu.classList.toggle('open');
-      arrow.classList.toggle(modificators.arrowActive);
-    });
-  });
-};
-
-const setMenuBehaviour = (items, arrows) => {
-  if (isMobile()) {
-    setMenuLinksMobileBehaviour(items);
-    setMenuArrowsMobileBehaviour(arrows);
-  } else {
-    setMenuLinksDesktopBehaviour(items);
-    setMenuArrowsDesktopBehaviour(arrows);
   }
 };
 
-const checkMenuBehaviourOnResize = (items, arrows) => {
-  window.addEventListener('resize', () => {
-    if (!isMobile()) {
-      removeBurgerClasses(dom.burger, dom.menu);
-      setMenuLinksDesktopBehaviour(items);
-      setMenuArrowsDesktopBehaviour(arrows);
-    } else {
-      setMenuLinksMobileBehaviour(items);
-      setMenuArrowsMobileBehaviour(arrows);
+const initBlackout = (args) => {
+  document.addEventListener('click', (e) => {
+    const { target } = e;
+
+    if (args.page.classList.contains(modificators.blackout) && target === args.page) {
+      removeBurgerClasses(args);
     }
   });
 };
 
-setMenuBehaviour(dom.menuItems.firstLvl, dom.menuArrows);
-toggleBurgerClasses(dom.burger, dom.menu);
-checkMenuBehaviourOnResize(dom.menuItems.firstLvl, dom.menuArrows);
+const setMenuBehaviour = (args) => {
+  if (isMobile()) {
+    args.body.classList.add(extraClasses.touch);
+  } else {
+    removeBurgerClasses(args);
+    args.body.classList.remove(extraClasses.touch);
+  }
+};
 
+const setMenuBehaviourOnResize = (args) => {
+  const mediaBreakpoint = 767;
+
+  window.addEventListener('resize', () => {
+    if (document.documentElement.clientWidth > mediaBreakpoint && !isMobile()) {
+      removeBurgerClasses(args);
+      args.body.classList.remove(extraClasses.touch);
+    } else if (document.documentElement.clientWidth <= mediaBreakpoint && !isMobile()) {
+      args.body.classList.add(extraClasses.touch);
+    } else if (document.documentElement.clientWidth > mediaBreakpoint && isMobile()) {
+      removeBurgerClasses(args);
+    }
+  });
+};
+
+initBlackout(commonArguments);
+setMenuBehaviour(commonArguments);
+toggleBurgerClasses(commonArguments);
+setMenuBehaviourOnResize(commonArguments);
+setMenuArrowsBehaviour(
+  [dom.menuArrows.firstLvl, dom.menuArrows.secondLvl],
+  [dom.menuLists.secondLvl, dom.menuLists.thirdLvl]
+);
